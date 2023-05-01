@@ -14,7 +14,7 @@ function addItem(e){
   e.preventDefault();
 
   // Get input value
-  var newItem = document.getElementById('item').value;
+  var newItem = document.getElementById('item').value + ' ' + document.getElementById('description').value;
 
   // Create new li element
   var li = document.createElement('li');
