@@ -1,8 +1,15 @@
+myObj myDetails = {
+    Name: document.getElementById('name').value,
+    Email: document.getElementById('email').value,
+    Phone: document.getElementById('phone').value,
+    Date: document.getElementById('date').value,
+    Time: document.getElementById('time').value
+}
 const btn = document.querySelector('.btn');
 btn.addEventListener('click', (e) => {
     e.preventDefault();
     btn.style.background = 'red';
-    document.querySelector('body').classList.add('bg-dark');
+    document.querySelector('body').classList.add('bg-dark')
 
     localStorage.setItem("Name",document.getElementById('name').value)
     localStorage.setItem("Email",document.getElementById('email').value)
