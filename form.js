@@ -1,21 +1,24 @@
-myObj myDetails = {
-    Name: document.getElementById('name').value,
-    Email: document.getElementById('email').value,
-    Phone: document.getElementById('phone').value,
-    Date: document.getElementById('date').value,
-    Time: document.getElementById('time').value
-}
 const btn = document.querySelector('.btn');
 btn.addEventListener('click', (e) => {
     e.preventDefault();
     btn.style.background = 'red';
     document.querySelector('body').classList.add('bg-dark')
+    let userRecords = new Array();
+    let Name = document.getElementById('name').value;
+    let Email = document.getElementById('email').value;
+    let Phone = document.getElementById('phone').value;
+    let Date = document.getElementById('date').value;
+    let Time = document.getElementById('time').value;
+    userRecords = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];
+    userRecords.push({
+        "name": Name,
+        "email": Email,
+        "phone" : Phone,
+        "date" : Date,
+        "time" : Time
+    })
+    localStorage.setItem("users", JSON.stringify(userRecords));
 
-    localStorage.setItem("Name",document.getElementById('name').value)
-    localStorage.setItem("Email",document.getElementById('email').value)
-    localStorage.setItem("Phone",document.getElementById('phone').value)
-    localStorage.setItem("Date",document.getElementById('date').value)
-    localStorage.setItem("Time",document.getElementById('time').value)
     });
 btn.addEventListener('mouseover', (e) => {
 e.preventDefault();
