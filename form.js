@@ -1,8 +1,8 @@
 const btn = document.querySelector('.btn');
 btn.addEventListener('click', (e) => {
     e.preventDefault();
-    btn.style.background = 'red';
-    document.querySelector('body').classList.add('bg-dark')
+    //btn.style.background = 'red';
+    //document.querySelector('body').classList.add('bg-dark')
     let userRecords = new Array();
     let Name = document.getElementById('name').value;
     let Email = document.getElementById('email').value;
@@ -17,8 +17,10 @@ btn.addEventListener('click', (e) => {
         "date" : Date,
         "time" : Time
     })
-    localStorage.setItem("users", JSON.stringify(userRecords));
+    localStorage.setItem(Email, JSON.stringify(userRecords));
 
+    document.getElementById("getcall").insertAdjacentHTML("afterend",
+                "<h5>"+"> "+Name+" - "+Email+" - "+Phone+" - "+Date+" - "+Time+"</h5>");
     });
 btn.addEventListener('mouseover', (e) => {
 e.preventDefault();
