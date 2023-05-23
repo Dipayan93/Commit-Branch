@@ -9,34 +9,56 @@ itemList.addEventListener('click', removeItem);
 
 
 // Add item
-function addItem(e){
+function addItem(e)
+{
   
   e.preventDefault();
+  let userRecords = new Array();
+    let Name = document.getElementById('name').value;
+    let Email = document.getElementById('email').value;
+    let Phone = document.getElementById('phone').value;
+    userRecords = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];
+    if(userRecords.some((v)=>{return v.Email==Email}))
+    {
+        alert("Duplicate Data");
+    }
+    else
+    {    
+        userRecords.push({
+            "name": Name,
+            "email": Email,
+            "phone" : Phone
+        })
+        localStorage.setItem(Email, JSON.stringify(userRecords));
+    
+        // Get input value
+        var newItem = document.getElementById('name').value + ' ' + document.getElementById('email').value 
+        + ' ' + document.getElementById('phone').value;
 
-  // Get input value
-  var newItem = document.getElementById('item').value + ' ' + document.getElementById('description').value + ' ' + document.getElementById('description1').value;
+        // Create new li element
+        var li = document.createElement('li');
 
-  // Create new li element
-  var li = document.createElement('li');
-  // Add class
-  li.className = 'list-group-item';
-  // Add text node with input value
-  li.appendChild(document.createTextNode(newItem));
+        // Add class
+        li.className = 'list-group-item';
 
-  // Create del button element
-  var deleteBtn = document.createElement('button');
+        // Add text node with input value
+        li.appendChild(document.createTextNode(newItem));
 
-  // Add classes to del button
-  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+        // Create del button element
+        var deleteBtn = document.createElement('button');
 
-  // Append text node
-  deleteBtn.appendChild(document.createTextNode('DELETE'));
+        // Add classes to del button
+        deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
 
-  // Append button to li
-  li.appendChild(deleteBtn);
+        // Append text node
+        deleteBtn.appendChild(document.createTextNode('DELETE'));
 
-  // Append li to list
-  itemList.appendChild(li);
+        // Append button to li
+        li.appendChild(deleteBtn);
+
+        // Append li to list
+        itemList.appendChild(li);
+    }
 }
 
 // Remove item
@@ -45,6 +67,7 @@ function removeItem(e){
     if(confirm('Are You Sure?')){
       var li = e.target.parentElement;
       itemList.removeChild(li);
+      localStorage.removeItem(document.getElementById('email').value)
     }
   }
 }
