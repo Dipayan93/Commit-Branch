@@ -1,22 +1,21 @@
 var form = document.getElementById('addForm');
 var itemList = document.getElementById('items');
-var filter = document.getElementById('filter');
-
+var editDet = document.getElementById('items');
+let Name = document.getElementById('name').value;
+let Email = document.getElementById('email').value;
+let Phone = document.getElementById('phone').value;
 // Form submit event
 form.addEventListener('submit', addItem);
 // Delete event
 itemList.addEventListener('click', removeItem);
 
-
+itemList.addEventListener('click', editItem);
 // Add item
 function addItem(e)
 {
   
   e.preventDefault();
   let userRecords = new Array();
-    let Name = document.getElementById('name').value;
-    let Email = document.getElementById('email').value;
-    let Phone = document.getElementById('phone').value;
     userRecords = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];
     if(userRecords.some((v)=>{return v.Email==Email}))
     {
@@ -58,6 +57,22 @@ function addItem(e)
 
         // Append li to list
         itemList.appendChild(li);
+        
+        
+        // Create edit button element
+        var editBtn = document.createElement('button');
+
+        // Add classes to del button
+        editBtn.className = 'btn btn-success btn-sm float-right edit';
+
+        // Append text node
+        editBtn.appendChild(document.createTextNode('EDIT'));
+
+        // Append button to li
+        li.appendChild(editBtn);
+
+        // Append li to list
+        itemList.appendChild(li);
     }
 }
 
@@ -68,6 +83,22 @@ function removeItem(e){
       var li = e.target.parentElement;
       itemList.removeChild(li);
       localStorage.removeItem(document.getElementById('email').value)
+    }
+  }
+}
+function editItem(e){
+  if(e.target.classList.contains('edit')){
+    if(confirm('Edit this user details?')){
+      var li = e.target.parentElement;
+      if(Name==null || Email==null || Phone==null)
+      {
+        alert('No value to edit')
+      }
+      else
+      {
+        itemList.removeChild(li);
+        localStorage.removeItem(Email)
+      }
     }
   }
 }
