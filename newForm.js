@@ -96,10 +96,6 @@ function editItem(e){
       {
         alert('No value to edit')
       }
-      else if(localStorage.getItem(Email) !== null)
-      {
-        alert('Duplicate Data, please enter different email ID')
-      }
       else
       {
         itemList.removeChild(li)
@@ -110,7 +106,6 @@ function editItem(e){
             "email": Email,
             "phone" : Phone
         })
-        console.log(userRec)
         localStorage.setItem(Email, JSON.stringify(userRec));
     
         // Get input value
