@@ -96,16 +96,22 @@ function editItem(e){
       {
         alert('No value to edit')
       }
+      else if(localStorage.getItem(Email) !== null)
+      {
+        alert('Duplicate Data, please enter different email ID')
+      }
       else
       {
-        let userRecords = new Array();
-        userRecords = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];  
-        userRecords.push({
+        itemList.removeChild(li)
+        let userRec = new Array();
+        userRec = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];  
+        userRec.push({
             "name": Name,
             "email": Email,
             "phone" : Phone
         })
-        localStorage.setItem(Email, JSON.stringify(userRecords));
+        console.log(userRec)
+        localStorage.setItem(Email, JSON.stringify(userRec));
     
         // Get input value
         var newItem = document.getElementById('name').value + ' ' + document.getElementById('email').value 
@@ -133,7 +139,7 @@ function editItem(e){
         li.appendChild(deleteBtn);
 
         // Append li to list
-        itemList.appendChild(li);
+        editDet.appendChild(li);
         
         
         // Create edit button element
@@ -149,9 +155,7 @@ function editItem(e){
         li.appendChild(editBtn);
 
         // Append li to list
-        itemList.appendChild(li);
-        itemList.removeChild(li)
-        localStorage.removeItem(Email)
+        editDet.appendChild(li);
         
       }
     }
