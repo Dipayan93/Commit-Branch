@@ -12,25 +12,38 @@ function getTodos() {
   
   // PUT/PATCH REQUEST
   function updateTodo() {
+    axios.put('https://jsonplaceholder.typicode.com/posts/1')
+    .then(res => showOutput(res[1])).catch(err => console.log(err))
+  }
+  
+  // DELETE REQUEST
+  function removeTodo() {
+    axios.delete('https://jsonplaceholder.typicode.com/posts/1')
+    .then(res => showOutput(res)).catch(err => console.log(err))
+  }
+  
+  // SIMULTANEOUS DATA
+  function getData() {
     axios.all([
       axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3'),
       axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3')])
     .then(res => showOutput(res[1])).catch(err => console.log(err))
   }
   
-  // DELETE REQUEST
-  function removeTodo() {
-    console.log('DELETE Request');
-  }
-  
-  // SIMULTANEOUS DATA
-  function getData() {
-    console.log('Simultaneous Request');
-  }
-  
   // CUSTOM HEADERS
   function customHeaders() {
-    console.log('Custom Headers');
+    const config ={
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'TOKEN'
+      }
+    }
+    
+    axios.post('https://jsonplaceholder.typicode.com/todos?_limit=3', {
+      title: 'New Todo',
+      completed: false
+    })
+    .then(res => showOutput(res)).catch(err => console.log(err))
   }
   
   // TRANSFORMING REQUESTS & RESPONSES
