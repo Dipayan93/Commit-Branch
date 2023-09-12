@@ -1,16 +1,21 @@
 // GET REQUEST
 function getTodos() {
-    console.log('GET Request');
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3')
+    .then(res => showOutput(res)).catch(err => console.log(err))
   }
   
   // POST REQUEST
   function addTodo() {
-    console.log('POST Request');
+    axios.get('https://jsonplaceholder.typicode.com/posts?_limit=3')
+    .then(res => showOutput(res)).catch(err => console.log(err))
   }
   
   // PUT/PATCH REQUEST
   function updateTodo() {
-    console.log('PUT/PATCH Request');
+    axios.all([
+      axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3'),
+      axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3')])
+    .then(res => showOutput(res[1])).catch(err => console.log(err))
   }
   
   // DELETE REQUEST
