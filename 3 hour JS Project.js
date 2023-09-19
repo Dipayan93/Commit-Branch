@@ -18,7 +18,7 @@ function addItem(e)
     userRecords = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];
     if(localStorage.getItem(Email) !== null)
     {
-        alert('Duplicate Data, please enter different email ID')
+        alert('Duplicate Data, please enter different Description')
     }
     else
     {    

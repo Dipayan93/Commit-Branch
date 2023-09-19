@@ -7,34 +7,47 @@ form.addEventListener('submit', addItem);
 itemList.addEventListener('click', removeItem);
 
 itemList.addEventListener('click', editItem);
+let Price = document.getElementById('price').value;
+  let Desc = document.getElementById('desc').value;
+  let Catgy = document.getElementById('catgy').value;
+        const userRecords = {
+            Price,
+            Desc,
+            Catgy
+        }
 // Add item
+window.addEventListener("DOMContentLoaded", () => {
+  axios.get("https://crudcrud.com/api/6e5b3477a08d400e9608cbeb29de1453/expense")
+  .then((res) => {
+    console.log(res)
+    for(var i=0; i < res.data.length; i++) {
+      getResponse(res.data[i]);
+    }
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+})
 function addItem(e)
 {
   e.preventDefault();
-  let Name = document.getElementById('name').value;
-  let Email = document.getElementById('email').value;
-  let Phone = document.getElementById('phone').value;
-  let userRecords = new Array();
-    userRecords = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];
-    if(localStorage.getItem(Email) !== null)
-    {
-        alert('Duplicate Data, please enter different email ID')
-    }
-    else
-    {    
-        userRecords.push({
-            "name": Name,
-            "email": Email,
-            "phone" : Phone
-        })
-        axios.post("https://crudcrud.com/api/f6a3e714a8ab4d7ea7065841c9162f74/ExpenseData", userRecords)
+  let Price = document.getElementById('price').value;
+  let Desc = document.getElementById('desc').value;
+  let Catgy = document.getElementById('catgy').value;
+        const userRecords = {
+            Price,
+            Desc,
+            Catgy
+        }
+        axios.post("https://crudcrud.com/api/6e5b3477a08d400e9608cbeb29de1453/expense", userRecords)
         .then((res) => {console.log(res)})
         .catch((err) => {console.log(err)})
-        localStorage.setItem(Email, JSON.stringify(userRecords));
-    
-        // Get input value
-        var newItem = document.getElementById('name').value + ' ' + document.getElementById('email').value 
-        + ' ' + document.getElementById('phone').value;
+        //localStorage.setItem(Desc, JSON.stringify(userRecords));
+        getResponse(userRecords);
+      }
+      function getResponse(userRecords)  {  
+        var newItem = userRecords.Price + ' ' + userRecords.Desc
+        + ' ' + userRecords.Catgy;
 
         // Create new li element
         var li = document.createElement('li');
@@ -76,7 +89,6 @@ function addItem(e)
         // Append li to list
         itemList.appendChild(li);
     }
-}
 
 // Remove item
 function removeItem(e){
@@ -84,7 +96,7 @@ function removeItem(e){
     if(confirm('Are You Sure?')){
       var li = e.target.parentElement;
       itemList.removeChild(li);
-      localStorage.removeItem(document.getElementById('email').value)
+      localStorage.removeItem(document.getElementById('desc').value)
     }
   }
 }
@@ -92,10 +104,10 @@ function editItem(e){
   if(e.target.classList.contains('edit')){
     if(confirm('Edit this user details?')){
       var li = e.target.parentElement;
-      let Name = document.getElementById('name').value;
-      let Email = document.getElementById('email').value;
-      let Phone = document.getElementById('phone').value;
-      if((Name == null || Name == "") && (Email == null || Email == "") && (Phone == null || Email == ""))
+      let Price = document.getElementById('price').value;
+      let Desc = document.getElementById('desc').value;
+      let Catgy = document.getElementById('catgy').value;
+      if((Price == null || Price == "") && (Desc == null || Desc == "") && (Catgy == null || Desc == ""))
       {
         alert('No value to edit')
       }
@@ -105,15 +117,15 @@ function editItem(e){
         let userRec = new Array();
         userRec = JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[];  
         userRec.push({
-            "name": Name,
-            "email": Email,
-            "phone" : Phone
+            "price": Price,
+            "desc": Desc,
+            "catgy" : Catgy
         })
-        localStorage.setItem(Email, JSON.stringify(userRec));
+        localStorage.setItem(Desc, JSON.stringify(userRec));
     
         // Get input value
-        var newItem = document.getElementById('name').value + ' ' + document.getElementById('email').value 
-        + ' ' + document.getElementById('phone').value;
+        var newItem = document.getElementById('price').value + ' ' + document.getElementById('desc').value 
+        + ' ' + document.getElementById('catgy').value;
 
         // Create new li element
         var li = document.createElement('li');
