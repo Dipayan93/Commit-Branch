@@ -6,7 +6,7 @@ form.addEventListener('submit', addItem);
 // Delete event
 itemList.addEventListener('click', removeItem);
 
-itemList.addEventListener('click', editItem);
+//itemList.addEventListener('click', editItem);
 let Price = document.getElementById('price').value;
   let Desc = document.getElementById('desc').value;
   let Catgy = document.getElementById('catgy').value;
@@ -17,7 +17,7 @@ let Price = document.getElementById('price').value;
         }
 // Add item
 window.addEventListener("DOMContentLoaded", () => {
-  axios.get("https://crudcrud.com/api/6e5b3477a08d400e9608cbeb29de1453/expense")
+  axios.get("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense")
   .then((res) => {
     console.log(res)
     for(var i=0; i < res.data.length; i++) {
@@ -39,10 +39,10 @@ function addItem(e)
             Desc,
             Catgy
         }
-        axios.post("https://crudcrud.com/api/6e5b3477a08d400e9608cbeb29de1453/expense", userRecords)
+        axios.post("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense", userRecords)
         .then((res) => {console.log(res)})
         .catch((err) => {console.log(err)})
-        //localStorage.setItem(Desc, JSON.stringify(userRecords));
+        localStorage.setItem(Desc, JSON.stringify(userRecords));
         getResponse(userRecords);
       }
       function getResponse(userRecords)  {  
@@ -92,15 +92,36 @@ function addItem(e)
 
 // Remove item
 function removeItem(e){
+  e.preventDefault();
   if(e.target.classList.contains('delete')){
     if(confirm('Are You Sure?')){
+      //var Desc1 = document.getElementById('desc').value;
+      var id=0;
       var li = e.target.parentElement;
       itemList.removeChild(li);
-      localStorage.removeItem(document.getElementById('desc').value)
+      axios.get("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense")
+  .then((res) => {
+      console.log(res);
+      var Desc1 = document.getElementById('desc').value;
+      console.log(Desc1)
+      for(var i=0; i < res.data.length; i++) {
+        if(res.data[i].Desc == Desc1){
+          id = res.data[i]._id;
+        }  
+      }
+      axios.delete("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense/"+ id)
+      .then((res1) => {console.log(res1)})
+      .catch((err1) => {console.log(err1)})
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+  
+      localStorage.removeItem(Desc1)
     }
   }
 }
-function editItem(e){
+/*function editItem(e){
   if(e.target.classList.contains('edit')){
     if(confirm('Edit this user details?')){
       var li = e.target.parentElement;
@@ -170,4 +191,4 @@ function editItem(e){
       }
     }
   }
-}
+}*/
