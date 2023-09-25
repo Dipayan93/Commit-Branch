@@ -17,7 +17,7 @@ let Price = document.getElementById('price').value;
         }
 // Add item
 window.addEventListener("DOMContentLoaded", () => {
-  axios.get("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense")
+  axios.get("https://crudcrud.com/api/b51b0b53dd71443287dd83c3143b1184/expense")
   .then((res) => {
     console.log(res)
     for(var i=0; i < res.data.length; i++) {
@@ -39,7 +39,7 @@ function addItem(e)
             Desc,
             Catgy
         }
-        axios.post("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense", userRecords)
+        axios.post("https://crudcrud.com/api/b51b0b53dd71443287dd83c3143b1184/expense", userRecords)
         .then((res) => {console.log(res)})
         .catch((err) => {console.log(err)})
         localStorage.setItem(Desc, JSON.stringify(userRecords));
@@ -95,29 +95,27 @@ function removeItem(e){
   e.preventDefault();
   if(e.target.classList.contains('delete')){
     if(confirm('Are You Sure?')){
-      //var Desc1 = document.getElementById('desc').value;
-      var id=0;
-      var li = e.target.parentElement;
-      itemList.removeChild(li);
-      axios.get("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense")
+      var Desc1 = document.getElementById('desc').value;
+      axios.get("https://crudcrud.com/api/b51b0b53dd71443287dd83c3143b1184/expense")
   .then((res) => {
       console.log(res);
-      var Desc1 = document.getElementById('desc').value;
       console.log(Desc1)
-      for(var i=0; i < res.data.length; i++) {
+      for(let i=0; i < res.data.length; i++) {
         if(res.data[i].Desc == Desc1){
           id = res.data[i]._id;
         }  
       }
-      axios.delete("https://crudcrud.com/api/70c996f979cc4d5a8f890705a1b976b9/expense/"+ id)
-      .then((res1) => {console.log(res1)})
+      axios.delete("https://crudcrud.com/api/b51b0b53dd71443287dd83c3143b1184/expense/"+ id)
+      .then((res1) => {console.log(res1)
+        var li = e.target.parentElement;
+        itemList.removeChild(li);
+        localStorage.removeItem(document.getElementById('desc').value)
+      })
       .catch((err1) => {console.log(err1)})
   })
   .catch((err) => {
     console.log(err)
   })
-  
-      localStorage.removeItem(Desc1)
     }
   }
 }
