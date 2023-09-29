@@ -7,9 +7,41 @@
     <title>Document</title>
 </head>
 <body>
-    <li style="color: green">Hello</li>
+    !DOCTYPE html>
+<html>
+<head>
+    <title>Some title</title>
+</head>
+<body>
+    <ul class="categories">
+        <li>
+            <a href="http://www.example2.com/1">
+            <div>
+                <img src="http://www.example.com/someSource">
+                <span>First</span>
+            </div>
+            </a>
+        </li>
+
+        <li>
+            <a href="http://www.example2.com/1">
+            <div>
+                <img src="http://www.example.com/someSource">
+                <span>Second</span>
+            </div>
+            </a>
+        </li>
+
+    </ul>
+</body>
+</html>
     <script>
-        document.getElementById("style").style.color = "yellow";
+        const buttons = document.getElementsByTagName("button");
+        const buttonPressed = e => {
+  console.log(e.target.id);  // Get ID of Clicked Element
+}for (let button of buttons) {
+  button.addEventListener("click", buttonPressed);
+}
     </script>
 </body>
 </html>

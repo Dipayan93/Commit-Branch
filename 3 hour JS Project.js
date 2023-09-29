@@ -79,7 +79,10 @@ function addItem(e)
 function removeItem(e){
   if(e.target.classList.contains('delete')){
     if(confirm('Are You Sure?')){
+      console.log();
+      console.log()
       var li = e.target.parentElement;
+      
       itemList.removeChild(li);
       localStorage.removeItem(document.getElementById('email').value)
     }
