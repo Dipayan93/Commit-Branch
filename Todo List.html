@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <form id="todo">
+        <label for="todoname">Todoname</label>
+        <input type="text" id="name">
+        <label for="description">Todo Description</label>
+        <input type="text" id="description">
+        <input id="add" type="submit" value="Add Item">
+    </form>
+    <br>
+    <br>
+    <h4>Pending todos</h4>
+    <ul id="pending" class="list-group"></ul> <br>
+    <h4>Completed todos</h4>
+    <ul id="completed" class="list-group"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
+    <script src="Todo List.js"></script>
+</body>
+</html>
