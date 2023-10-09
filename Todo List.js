@@ -94,7 +94,7 @@ function removeTodoList(e){
               Name,
               Description
           }
-            axios.put(apiLink + id, todoRecords1)
+            axios.put(link + id, todoRecords1)
             .then(
             addcompleteTodos(todoRecords1)
             )
