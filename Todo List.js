@@ -2,7 +2,8 @@ var Name = document.getElementById("name").value
 var Description = document.getElementById("description").value
 var Additem = document.getElementById('todo')
 var pendingTodo = document.getElementById('pending')
-var completeTodo = document.getElementById('completed')
+var completeTodo = document.getElementById('complete')
+var Status = 'p'
 
 Additem.addEventListener('submit', addItem)
 
@@ -12,16 +13,21 @@ pendingTodo.addEventListener('click', completeTodoList)
 
 pendingTodo.addEventListener('click', removeTodoList)
 
-var link = "https://crudcrud.com/api/0e3272aa84994efb9f206bed1bb1bac6"+"/todos"
+var link = "https://crudcrud.com/api/287b739f990b49c8aef3dc7389808990"+"/todos/"
 var todoList = {
     Name,
-    Description
+    Description,
+    Status
 }
 window.addEventListener("DOMContentLoaded", () => {
     axios.get(link)
     .then((res) => {
       for(var i=0; i < res.data.length; i++) {
-        addpendingTodos(res.data[i]);
+        if(Status == 'p')
+            addpendingTodos(res.data[i])
+        else
+            addcompleteTodos(res.data[i])
+
         localStorage.setItem(res.data[i].Description, JSON.stringify(res.data[i]));
       }
     })
@@ -29,34 +35,44 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log(err)
     })
   })
+
 function addItem(e)
 {
-e.preventDefault();
-axios.post(link, todoList)
-.then((res) => {console.log(res)})
-.catch((err) => {console.log(err)})
-localStorage.setItem(Description, JSON.stringify(todoList));
-addpendingTodos(todoList)
+    var Name = document.getElementById("name").value
+    var Description = document.getElementById("description").value
+      var todoList = {
+        Name,
+        Description,
+        Status
+    }
+    e.preventDefault();
+    axios.post(link, todoList)
+    .then((res) => {console.log(res)})
+    .catch((err) => {console.log(err)})
+    localStorage.setItem(Description, JSON.stringify(todoList));
+    addpendingTodos(todoList)
 }
+
 
 function removeTodoList(e){
     if(e.target.classList.contains('delete')){
-      if(confirm('Are You Sure?')){
+      if(confirm('Delete this todo?')){
         var li = e.target.parentElement;
-          itemList.removeChild(li);
-          const Desc1 = e.target.parentElement.firstChild.nodeValue.split(' ')[1]
+        pendingTodo.removeChild(li);
+          const Desc1 = e.target.parentElement.firstChild.nodeValue.split('- ')[1]
         let id;
         let i = 0;
-        axios.get(apiLink)
+        axios.get(link)
     .then((res) => {
+      console.log(res + Desc1)
         for(i=0; i < res.data.length; i++) {
-          
-          if(res.data[i].Desc == Desc1){
+          console.log(res)
+          if(res.data[i].Description == Desc1){
             id = res.data[i]._id;
             break;
           }  
         }
-        axios.delete(apiLink+ id)
+        axios.delete(link+ id)
         .then((res1) => {console.log(res1)
           
           localStorage.removeItem(Desc1)
@@ -68,8 +84,10 @@ function removeTodoList(e){
     })
       }
     }
-  }
-  function completeTodoList(e){
+}
+
+
+function completeTodoList(e){
     if(e.target.classList.contains('edit')){
       if(confirm('Todo completed?')){
         var li = e.target.parentElement;
@@ -80,7 +98,6 @@ function removeTodoList(e){
         localStorage.removeItem(Desc2)
         axios.get(link)
     .then((res) => {
-      
         for(i=0; i < res.data.length; i++) {
           
           if(res.data[i].Description == Desc2){
@@ -88,11 +105,12 @@ function removeTodoList(e){
             break;
           }  
         }
-        let Name = document.getElementById('price').value;
-        let Description = document.getElementById('desc').value;
+        let Name = document.getElementById('name').value;
+        let Description = document.getElementById('description').value;
           var todoRecords1 = {
               Name,
-              Description
+              Description,
+              Status
           }
             axios.put(link + id, todoRecords1)
             .then(
@@ -106,10 +124,11 @@ function removeTodoList(e){
         
       }
     }
-  }
+}
+
 
 function addpendingTodos(todoList)  {  
-  var newItem = todoList.Name + ' ' + todoList.Description;
+  var newItem = todoList.Name + " - " + todoList.Description;
 
   // Create new li element
   var li = document.createElement('li');
@@ -152,8 +171,9 @@ function addpendingTodos(todoList)  {
   pendingTodo.appendChild(li);
 }
 
+
 function addcompleteTodos(todoList)  {  
-    var newItem = todoList.Name + ' ' + todoList.Description;
+    var newItem = todoList.Name + " - " + todoList.Description;
   
     // Create new li element
     var li = document.createElement('li');
