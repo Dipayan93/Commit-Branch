@@ -4,7 +4,6 @@ var Additem = document.getElementById('todo')
 var pendingTodo = document.getElementById('pending')
 var completeTodo = document.getElementById('complete')
 var Status = 'p'
-
 Additem.addEventListener('submit', addItem)
 
 
@@ -13,7 +12,7 @@ pendingTodo.addEventListener('click', completeTodoList)
 
 pendingTodo.addEventListener('click', removeTodoList)
 
-var link = "https://crudcrud.com/api/287b739f990b49c8aef3dc7389808990"+"/todos/"
+var link = "https://crudcrud.com/api/8fb9b1b4937f4175989bc2511e0911e6"+"/todos/"
 var todoList = {
     Name,
     Description,
@@ -22,13 +21,12 @@ var todoList = {
 window.addEventListener("DOMContentLoaded", () => {
     axios.get(link)
     .then((res) => {
+      console.log(res)
       for(var i=0; i < res.data.length; i++) {
-        if(Status == 'p')
+        if(res.data[i].Status == 'p')
             addpendingTodos(res.data[i])
         else
             addcompleteTodos(res.data[i])
-
-        localStorage.setItem(res.data[i].Description, JSON.stringify(res.data[i]));
       }
     })
     .catch((err) => {
@@ -49,7 +47,6 @@ function addItem(e)
     axios.post(link, todoList)
     .then((res) => {console.log(res)})
     .catch((err) => {console.log(err)})
-    localStorage.setItem(Description, JSON.stringify(todoList));
     addpendingTodos(todoList)
 }
 
@@ -74,8 +71,6 @@ function removeTodoList(e){
         }
         axios.delete(link+ id)
         .then((res1) => {console.log(res1)
-          
-          localStorage.removeItem(Desc1)
         })
         .catch((err1) => {console.log(err1)})
     })
@@ -90,31 +85,33 @@ function removeTodoList(e){
 function completeTodoList(e){
     if(e.target.classList.contains('edit')){
       if(confirm('Todo completed?')){
+        let Name = e.target.parentElement.innerText.split(' - ')[0]
+        let Description = e.target.parentElement.innerText.split(' - ')[1]
+        let Status = 'c'
+        Description = Description.substring(0,Description.length-2);
         var li = e.target.parentElement;
-          pendingTodo.removeChild(li);
-        const Desc2 = e.target.parentElement.firstChild.nodeValue.split(' ')[1]
+        pendingTodo.removeChild(li);
         let id;
         let i = 0;
-        localStorage.removeItem(Desc2)
         axios.get(link)
     .then((res) => {
         for(i=0; i < res.data.length; i++) {
           
-          if(res.data[i].Description == Desc2){
+          if(res.data[i].Description == Description){
             id = res.data[i]._id;
             break;
           }  
         }
-        let Name = document.getElementById('name').value;
-        let Description = document.getElementById('description').value;
           var todoRecords1 = {
               Name,
               Description,
               Status
           }
+          console.log(todoRecords1)
             axios.put(link + id, todoRecords1)
-            .then(
+            .then((res) => {
             addcompleteTodos(todoRecords1)
+            }
             )
             .catch((err) => console.log(err))
             
@@ -135,6 +132,8 @@ function addpendingTodos(todoList)  {
 
   // Add class
   li.className = 'list-group-item';
+
+  li.id = todoList.Name;
 
   // Add text node with input value
   li.appendChild(document.createTextNode(newItem));
@@ -172,7 +171,8 @@ function addpendingTodos(todoList)  {
 }
 
 
-function addcompleteTodos(todoList)  {  
+function addcompleteTodos(todoList)  { 
+    console.log(todoList) 
     var newItem = todoList.Name + " - " + todoList.Description;
   
     // Create new li element
