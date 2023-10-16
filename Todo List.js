@@ -139,7 +139,7 @@ function addpendingTodos(todoList)  {
   var deleteBtn = document.createElement('button');
 
   // Add classes to del button
-  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+  deleteBtn.className = 'btn delete';
 
   // Append text node
   deleteBtn.appendChild(document.createTextNode('X'));
@@ -155,7 +155,7 @@ function addpendingTodos(todoList)  {
   var completeBtn = document.createElement('button');
 
   // Add classes to del button
-  completeBtn.className = 'btn btn-success btn-sm float-right edit';
+  completeBtn.className = 'btn edit';
 
   // Append text node
   completeBtn.appendChild(document.createTextNode('✓'));
