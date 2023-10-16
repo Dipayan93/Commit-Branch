@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+    <form id="todo">
+        <label for="todoname">Price: </label>
+        <input type="number" id="name">
+        <label for="description">Name: </label>
+        <input type="text" id="description">
+        <input id="add" type="submit" value="Add Product">
+    </form>
+    <br>
+    <br>
+    <h2>Products :</h2>
+    <ul id="pending" class="list-group"></ul>
+
+    <h4 id="sum">Total Value Worth of Products:</h4>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
+    <script src="product.js"></script>
+</body>
+</html>
