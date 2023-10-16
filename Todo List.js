@@ -12,7 +12,7 @@ pendingTodo.addEventListener('click', completeTodoList)
 
 pendingTodo.addEventListener('click', removeTodoList)
 
-var link = "https://crudcrud.com/api/8fb9b1b4937f4175989bc2511e0911e6"+"/todos/"
+var link = "https://crudcrud.com/api/4fa9ab7e93d443a8a5fda00da30e74f2"+"/todos/"
 var todoList = {
     Name,
     Description,
@@ -130,9 +130,6 @@ function addpendingTodos(todoList)  {
   // Create new li element
   var li = document.createElement('li');
 
-  // Add class
-  li.className = 'list-group-item';
-
   li.id = todoList.Name;
 
   // Add text node with input value
@@ -179,7 +176,7 @@ function addcompleteTodos(todoList)  {
     var li = document.createElement('li');
   
     // Add class
-    li.className = 'list-group-item';
+    
   
     // Add text node with input value
     li.appendChild(document.createTextNode(newItem));
