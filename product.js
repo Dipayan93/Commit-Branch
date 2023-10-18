@@ -5,14 +5,15 @@ var pendingTodo = document.getElementById('pending')
 var completeTodo = document.getElementById('complete')
 var Status = 'p'
 Additem.addEventListener('submit', addItem)
-
+var sum=0;
 
 
 pendingTodo.addEventListener('click', completeTodoList)
 
 pendingTodo.addEventListener('click', removeTodoList)
 
-var link = "https://crudcrud.com/api/91f7fb7045d64abda572a1d7662f6cf9"+"/todos/"
+var link = "https://crudcrud.com/api/70ebb4fb03db48e3b289c927697ecadc"+"/todos/"
+
 var todoList = {
     Name,
     Description,
@@ -22,13 +23,11 @@ var todoList = {
 window.addEventListener("DOMContentLoaded", () => {
     axios.get(link)
     .then((res) => {
-      console.log(res)
-      let sum=0;
       for(var i=0; i < res.data.length; i++) {
             addpendingTodos(res.data[i])
-            sum+=res.data[i].Name;
+            this.sum+=parseInt(res.data[i].Name);
       }
-      console.log(sum)
+      document.getElementById('sum').innerHTML = "Total Value Worth of Products: Rs. " + this.sum;
     })
     .catch((err) => {
       console.log(err)
@@ -46,7 +45,19 @@ function addItem(e)
     }
     e.preventDefault();
     axios.post(link, todoList)
-    .then((res) => {console.log(res)})
+    .then((res1) => {
+        axios.get(link)
+    .then((res) => {
+        var sum1=0;
+      for(var i=0; i < res.data.length; i++) {
+            sum1+=parseInt(res.data[i].Name);
+      }
+      document.getElementById('sum').innerHTML = "Total Value Worth of Products: Rs. " + sum1;
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    })
     .catch((err) => {console.log(err)})
     addpendingTodos(todoList)
 }
@@ -71,15 +82,23 @@ function removeTodoList(e){
           }  
         }
         axios.delete(link+ id)
-        .then((res1) => {console.log(res1)
+        .then((res1) => {
+        axios.get(link)
+        .then((res) => {
+            var sum1=0;
+          for(var i=0; i < res.data.length; i++) {
+                sum1+=parseInt(res.data[i].Name);
+          }
+          document.getElementById('sum').innerHTML = "Total Value Worth of Products: Rs. " + sum1;
         })
         .catch((err1) => {console.log(err1)})
     })
     .catch((err) => {
       console.log(err)
     })
-      }
+      })
     }
+}
 }
 
 
